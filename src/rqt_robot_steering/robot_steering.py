@@ -224,9 +224,42 @@ class RobotSteering(Plugin):
         self._unregister_publisher()
 
     def save_settings(self, plugin_settings, instance_settings):
-        topic = self._widget.topic_line_edit.text()
-        instance_settings.set_value('topic', topic)
-
+        instance_settings.set_value('topic' , self._widget.topic_line_edit.text())
+        instance_settings.set_value('vx_max', self._widget.max_x_linear_double_spin_box.value())
+        instance_settings.set_value('vx_min', self._widget.min_x_linear_double_spin_box.value()) 
+        instance_settings.set_value('vw_max', self._widget.max_z_angular_double_spin_box.value())
+        instance_settings.set_value('vw_min', self._widget.min_z_angular_double_spin_box.value())
+        
     def restore_settings(self, plugin_settings, instance_settings):
-        topic = instance_settings.value('topic', '/cmd_vel')
-        self._widget.topic_line_edit.setText(topic)
+                     
+        value = instance_settings.value('topic', "/cmd_vel")
+        value = rospy.get_param("~default_topic", value)           
+        self._widget.topic_line_edit.setText(value)
+        
+        value = self._widget.max_x_linear_double_spin_box.value()
+        value = instance_settings.value( 'vx_max', value)
+        value = rospy.get_param("~default_vx_max", value)           
+        self._widget.max_x_linear_double_spin_box.setValue(float(value))
+        
+        value = self._widget.min_x_linear_double_spin_box.value()
+        value = instance_settings.value( 'vx_min', value)
+        value = rospy.get_param("~default_vx_min", value)    
+        self._widget.min_x_linear_double_spin_box.setValue(float(value))
+        
+        value = self._widget.max_z_angular_double_spin_box.value()
+        value = instance_settings.value( 'vw_max', value)
+        value = rospy.get_param("~default_vw_max", value)     
+        self._widget.max_z_angular_double_spin_box.setValue(float(value))
+        
+        value = self._widget.min_z_angular_double_spin_box.value()
+        value = instance_settings.value( 'vw_min', value)
+        value = rospy.get_param("~default_vw_min", value) 
+        self._widget.min_z_angular_double_spin_box.setValue(float(value))
+        
+        
+        
+        
+        
+        
+        
+        

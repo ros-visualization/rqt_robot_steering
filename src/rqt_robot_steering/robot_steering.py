@@ -211,7 +211,7 @@ class RobotSteering(Plugin):
         twist.angular.x = 0
         twist.angular.y = 0
         twist.angular.z = z_angular
-        print(twist)
+        #print(twist)
         self._publisher.publish(twist)
 
     def _unregister_publisher(self):

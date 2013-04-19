@@ -32,14 +32,11 @@ from __future__ import division
 import os
 import rospkg
 
+from geometry_msgs.msg import Twist
+import rospy
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
 from python_qt_binding.QtGui import QKeySequence, QShortcut, QWidget
-
-import rospy
-
-from geometry_msgs.msg import Twist
-
 from rqt_gui_py.plugin import Plugin
 
 

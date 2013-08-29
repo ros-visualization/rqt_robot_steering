@@ -2,6 +2,9 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.3.0 (2013-08-28)
+------------------
+
 0.2.16 (2013-07-09)
 -------------------
 * First public release into Hydro

@@ -134,6 +134,7 @@ class RobotSteering(Plugin):
         self._update_parameter_timer = QTimer(self)
         self._update_parameter_timer.timeout.connect(self._on_parameter_changed)
         self._update_parameter_timer.start(100)
+        self.zero_cmd_sent = False
 
     @Slot(str)
     def _on_topic_changed(self, topic):
@@ -208,8 +209,15 @@ class RobotSteering(Plugin):
         twist.angular.x = 0
         twist.angular.y = 0
         twist.angular.z = z_angular
-        #print(twist)
-        self._publisher.publish(twist)
+
+        # Only send the zero command once so other devices can take control
+        if x_linear == 0 and z_angular == 0:
+            if not self.zero_cmd_sent:
+                self.zero_cmd_sent = True
+                self._publisher.publish(twist)
+        else:
+            self.zero_cmd_sent = False
+            self._publisher.publish(twist)
 
     def _unregister_publisher(self):
         if self._publisher is not None:

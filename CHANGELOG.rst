@@ -2,8 +2,8 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.1 (2013-10-09)
+------------------
 * send zero-value cmd_vel messages only once (`#53 <https://github.com/ros-visualization/rqt_robot_plugins/pull/53>`_)
 
 0.3.0 (2013-08-28)

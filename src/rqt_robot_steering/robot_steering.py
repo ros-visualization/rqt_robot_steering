@@ -140,7 +140,7 @@ class RobotSteering(Plugin):
     def _on_topic_changed(self, topic):
         topic = str(topic)
         self._unregister_publisher()
-        self._publisher = rospy.Publisher(topic, Twist)
+        self._publisher = rospy.Publisher(topic, Twist, queue_size=10)
 
     def _on_stop_pressed(self):
         self._widget.x_linear_slider.setValue(0)

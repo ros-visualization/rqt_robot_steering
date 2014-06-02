@@ -2,6 +2,10 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use queue_size for Python publishers
+
 0.3.4 (2014-05-07)
 ------------------
 

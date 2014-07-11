@@ -2,6 +2,10 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix compatibility with Groovy, use queue_size for Python publishers only when available (`#67 <https://github.com/ros-visualization/rqt_robot_plugins/pull/67>`_)
+
 0.3.5 (2014-06-02)
 ------------------
 * use queue_size for Python publishers

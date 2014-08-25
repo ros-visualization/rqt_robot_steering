@@ -5,4 +5,4 @@ import sys
 from rqt_gui.main import Main
 
 main = Main()
-sys.exit(main.main(sys.argv, standalone='rqt_robot_steering'))
+sys.exit(main.main(sys.argv, standalone='rqt_robot_steering.robot_steering.RobotSteering'))

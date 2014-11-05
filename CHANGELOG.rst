@@ -2,6 +2,10 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update script to use full plugin name
+
 0.3.7 (2014-08-18)
 ------------------
 

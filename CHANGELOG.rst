@@ -2,6 +2,9 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.4.2 (2015-07-24)
 ------------------
 

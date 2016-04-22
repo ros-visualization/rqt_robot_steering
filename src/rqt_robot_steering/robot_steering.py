@@ -36,7 +36,8 @@ from geometry_msgs.msg import Twist
 import rospy
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
-from python_qt_binding.QtGui import QKeySequence, QShortcut, QWidget
+from python_qt_binding.QtGui import QKeySequence
+from python_qt_binding.QtWidgets import QShortcut, QWidget
 from rqt_gui_py.plugin import Plugin
 
 

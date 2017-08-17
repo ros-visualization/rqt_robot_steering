@@ -141,7 +141,7 @@ class RobotSteering(Plugin):
     def _on_topic_changed(self, topic):
         topic = str(topic)
         self._unregister_publisher()
-        if topic == "":
+        if topic == '':
             return
         try:
             self._publisher = rospy.Publisher(topic, Twist, queue_size=10)

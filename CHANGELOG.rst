@@ -2,6 +2,10 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* always send zero twist when stop button is pressed (`#2 <https://github.com/ros-visualization/rqt_robot_steering/issues/2>`_)
+
 0.5.8 (2017-10-12)
 ------------------
 * handle an empty topic string (`#1 <https://github.com/ros-visualization/rqt_robot_steering/issues/1>`_)

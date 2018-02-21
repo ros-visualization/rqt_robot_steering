@@ -149,8 +149,14 @@ class RobotSteering(Plugin):
             self._publisher = rospy.Publisher(topic, Twist)
 
     def _on_stop_pressed(self):
-        self._widget.x_linear_slider.setValue(0)
-        self._widget.z_angular_slider.setValue(0)
+        # If the current value of sliders is zero directly send stop twist msg
+        if self._widget.x_linear_slider.value() is 0 and \
+                self._widget.z_angular_slider.value() is 0:
+            self.zero_cmd_sent = False
+            self._on_parameter_changed()
+        else:
+            self._widget.x_linear_slider.setValue(0)
+            self._widget.z_angular_slider.setValue(0)
 
     def _on_x_linear_slider_changed(self):
         self._widget.current_x_linear_label.setText('%0.2f m/s' % (self._widget.x_linear_slider.value() / RobotSteering.slider_factor))

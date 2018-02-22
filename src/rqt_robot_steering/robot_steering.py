@@ -306,7 +306,6 @@ class RobotSteering(Plugin):
             'vw_min', self._widget.min_z_angular_double_spin_box.value())
 
     def restore_settings(self, plugin_settings, instance_settings):
-
         value = instance_settings.value('topic', "/cmd_vel")
         value = rospy.get_param("~default_topic", value)
         self._widget.topic_line_edit.setText(value)

@@ -2,6 +2,12 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* minor cleanup (`#6 <https://github.com/ros-visualization/rqt_robot_steering/issues/6>`_)
+* add Python 3 conditional dependencies (`#5 <https://github.com/ros-visualization/rqt_robot_steering/issues/5>`_)
+* style: format code to conform to the PEP8 style (`#3 <https://github.com/ros-visualization/rqt_robot_steering/issues/3>`_)
+
 0.5.9 (2018-02-21)
 ------------------
 * always send zero twist when stop button is pressed (`#2 <https://github.com/ros-visualization/rqt_robot_steering/issues/2>`_)

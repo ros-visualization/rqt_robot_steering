@@ -2,8 +2,8 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.10 (2019-11-14)
+-------------------
 * minor cleanup (`#6 <https://github.com/ros-visualization/rqt_robot_steering/issues/6>`_)
 * add Python 3 conditional dependencies (`#5 <https://github.com/ros-visualization/rqt_robot_steering/issues/5>`_)
 * style: format code to conform to the PEP8 style (`#3 <https://github.com/ros-visualization/rqt_robot_steering/issues/3>`_)

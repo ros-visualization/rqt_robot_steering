@@ -2,8 +2,8 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.11 (2020-03-11)
+-------------------
 * bump CMake minimum version to avoid CMP0048 warning
 
 0.5.10 (2019-11-14)

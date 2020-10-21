@@ -2,6 +2,10 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix shebang line for Python 3 (`#9 <https://github.com/ros-visualization/rqt_robot_steering/issues/9>`_)
+
 0.5.11 (2020-03-11)
 -------------------
 * bump CMake minimum version to avoid CMP0048 warning

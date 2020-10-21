@@ -2,8 +2,8 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.12 (2020-10-21)
+-------------------
 * fix shebang line for Python 3 (`#9 <https://github.com/ros-visualization/rqt_robot_steering/issues/9>`_)
 
 0.5.11 (2020-03-11)

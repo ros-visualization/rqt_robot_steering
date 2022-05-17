@@ -229,19 +229,19 @@ class RobotSteering(Plugin):
 
     def _on_max_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMaximum(
-            value * RobotSteering.slider_factor)
+            int(value * RobotSteering.slider_factor))
 
     def _on_min_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMinimum(
-            value * RobotSteering.slider_factor)
+            int(value * RobotSteering.slider_factor))
 
     def _on_max_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMaximum(
-            value * RobotSteering.slider_factor)
+            int(value * RobotSteering.slider_factor))
 
     def _on_min_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMinimum(
-            value * RobotSteering.slider_factor)
+            int(value * RobotSteering.slider_factor))
 
     def _on_strong_increase_x_linear_pressed(self):
         self._widget.x_linear_slider.setValue(

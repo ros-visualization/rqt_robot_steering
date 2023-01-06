@@ -31,14 +31,15 @@
 import os
 
 from ament_index_python import get_resource
-from geometry_msgs.msg import Twist
+from std_msgs.msg import Header
+from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
 from python_qt_binding.QtGui import QKeySequence
 from python_qt_binding.QtWidgets import QShortcut, QWidget
 from rclpy.qos import QoSProfile
+import rclpy.clock
 from rqt_gui_py.plugin import Plugin
-
 
 class RobotSteering(Plugin):
 
@@ -50,6 +51,7 @@ class RobotSteering(Plugin):
 
         self._node = context.node
 
+        self._msgtype = "TwistStamped"
         self._publisher = None
 
         self._widget = QWidget()
@@ -61,6 +63,11 @@ class RobotSteering(Plugin):
             self._widget.setWindowTitle(
                 self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         context.add_widget(self._widget)
+
+        self._widget.msgtype_combo_box.insertItem(0, "Twist")
+        self._widget.msgtype_combo_box.insertItem(1, "TwistStamped")
+        self._widget.msgtype_combo_box.currentTextChanged.connect(
+            self._on_msgtype_changed)
 
         self._widget.topic_line_edit.textChanged.connect(
             self._on_topic_changed)
@@ -174,13 +181,21 @@ class RobotSteering(Plugin):
         self._update_parameter_timer.start(100)
         self.zero_cmd_sent = False
 
+    def _on_msgtype_changed(self):
+        # TODO
+        self._msgtype = self._widget.msgtype_combo_box.currentText()
     @Slot(str)
     def _on_topic_changed(self, topic):
         topic = str(topic)
         self._unregister_publisher()
         if topic == '':
             return
-        self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
+        if (self._msgtype == "Twist"):
+            self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
+        elif (self._msgtype == "TwistStamped"):
+            self._publisher = self._node.create_publisher(TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+        else:
+            return
 
     def _on_stop_pressed(self):
         # If the current value of sliders is zero directly send stop twist msg
@@ -264,6 +279,7 @@ class RobotSteering(Plugin):
     def _send_twist(self, x_linear, z_angular):
         if self._publisher is None:
             return
+
         twist = Twist()
         twist.linear.x = x_linear
         twist.linear.y = 0.0
@@ -272,14 +288,24 @@ class RobotSteering(Plugin):
         twist.angular.y = 0.0
         twist.angular.z = z_angular
 
+        if self._msgtype == "Twist":
+            twist_msg = twist
+        elif self._msgtype == "TwistStamped":
+            twist_msg = TwistStamped()
+            twist_msg.header = Header()
+            twist_msg.header.stamp = self._node.get_clock().now().to_msg()
+            twist_msg.twist = twist
+        else:
+            return
+
         # Only send the zero command once so other devices can take control
         if x_linear == 0.0 and z_angular == 0.0:
             if not self.zero_cmd_sent:
                 self.zero_cmd_sent = True
-                self._publisher.publish(twist)
+                self._publisher.publish(twist_msg)
         else:
             self.zero_cmd_sent = False
-            self._publisher.publish(twist)
+            self._publisher.publish(twist_msg)
 
     def _unregister_publisher(self):
         if self._publisher is not None:

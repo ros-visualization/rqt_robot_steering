@@ -34,11 +34,10 @@ from ament_index_python import get_resource
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import Qt, QTimer, Slot
+from python_qt_binding.QtCore import Qt, QTimer, Slot, QThread
 from python_qt_binding.QtGui import QKeySequence
 from python_qt_binding.QtWidgets import QShortcut, QWidget
 from rclpy.qos import QoSProfile
-import rclpy.clock
 from rqt_gui_py.plugin import Plugin
 
 class RobotSteering(Plugin):
@@ -51,7 +50,7 @@ class RobotSteering(Plugin):
 
         self._node = context.node
 
-        self._msgtype = "TwistStamped"
+        self._msgtype = ""
         self._publisher = None
 
         self._widget = QWidget()
@@ -66,9 +65,13 @@ class RobotSteering(Plugin):
 
         self._widget.msgtype_combo_box.insertItem(0, "Twist")
         self._widget.msgtype_combo_box.insertItem(1, "TwistStamped")
+
         self._widget.msgtype_combo_box.currentTextChanged.connect(
             self._on_msgtype_changed)
 
+        # Run the callback once so _msgtype is initialized
+        self._on_msgtype_changed()
+        
         self._widget.topic_line_edit.textChanged.connect(
             self._on_topic_changed)
         self._widget.stop_push_button.pressed.connect(self._on_stop_pressed)
@@ -184,17 +187,22 @@ class RobotSteering(Plugin):
     def _on_msgtype_changed(self):
         # TODO
         self._msgtype = self._widget.msgtype_combo_box.currentText()
+        self._on_topic_changed(self._widget.topic_line_edit.text())
+
     @Slot(str)
     def _on_topic_changed(self, topic):
         topic = str(topic)
         self._unregister_publisher()
+
         if topic == '':
             return
+
         if (self._msgtype == "Twist"):
             self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
         elif (self._msgtype == "TwistStamped"):
             self._publisher = self._node.create_publisher(TwistStamped, topic, qos_profile=QoSProfile(depth=10))
         else:
+            self._publisher = None
             return
 
     def _on_stop_pressed(self):
@@ -311,6 +319,10 @@ class RobotSteering(Plugin):
         if self._publisher is not None:
             self._node.destroy_publisher(self._publisher)
             self._publisher = None
+
+            # A short delay between stopping the publisher is needed
+            # if we want to create a new one on the same topic with a different message type
+            QThread.msleep(100)
 
     def shutdown_plugin(self):
         self._update_parameter_timer.stop()

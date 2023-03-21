@@ -34,9 +34,9 @@ from ament_index_python import get_resource
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import Qt, QTimer, Slot, QThread
+from python_qt_binding.QtCore import Qt, QTimer, Slot, QThread, QStringListModel, QModelIndex
 from python_qt_binding.QtGui import QKeySequence
-from python_qt_binding.QtWidgets import QShortcut, QWidget
+from python_qt_binding.QtWidgets import QShortcut, QWidget, QCompleter
 from rclpy.qos import QoSProfile
 from rqt_gui_py.plugin import Plugin
 
@@ -177,12 +177,39 @@ class RobotSteering(Plugin):
         self._widget.decrease_z_angular_push_button.setToolTip(
             self._widget.decrease_z_angular_push_button.toolTip() + ' ' + self.tr('([Shift +] D)'))
 
-        # timer to consecutively send twist messages
+        # Timer to consecutively send twist messages
         self._update_parameter_timer = QTimer(self)
         self._update_parameter_timer.timeout.connect(
             self._on_parameter_changed)
         self._update_parameter_timer.start(100)
         self.zero_cmd_sent = False
+
+        # Twist/TwistStamped topic name autocomplete
+        self.topic_completer = QCompleter()
+        self.topic_completer.setCompletionMode(QCompleter.PopupCompletion)
+        self._widget.topic_line_edit.setCompleter(self.topic_completer)
+        self.model = QStringListModel()
+        self.topic_completer.setModel(self.model)
+
+        self._on_topic_refresh_timer()
+
+        # Timer to periodically update topic suggestions
+        self._update_topic_completer_timer = QTimer(self)
+        self._update_topic_completer_timer.timeout.connect(
+            self._on_topic_refresh_timer)
+        self._update_topic_completer_timer.start(10000)
+
+    def _on_topic_refresh_timer(self):
+        topics_and_names = self._node.get_topic_names_and_types()
+        relevant_topics = []
+
+        for name, topic in topics_and_names:
+            if 'geometry_msgs/msg/Twist' in topic or 'geometry_msgs/msg/TwistStamped' in topic:
+                relevant_topics.append(name)
+
+        self.model = QStringListModel(relevant_topics)
+        self.topic_completer.setModel(self.model)
+
 
     def _on_msgtype_changed(self):
         # TODO
@@ -191,10 +218,13 @@ class RobotSteering(Plugin):
 
     @Slot(str)
     def _on_topic_changed(self, topic):
+
         topic = str(topic)
         self._unregister_publisher()
 
-        if topic == '':
+        # TODO: Is there a check_topic_valid()?
+        if topic == '' or not topic.startswith("/") or topic.endswith("/"):
+            # TODO: Set qlineedits's background color red while this is true?
             return
 
         if (self._msgtype == "Twist"):

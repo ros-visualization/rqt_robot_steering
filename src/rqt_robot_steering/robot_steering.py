@@ -31,14 +31,14 @@
 import os
 
 from ament_index_python import get_resource
-from geometry_msgs.msg import Twist
+from std_msgs.msg import Header
+from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import Qt, QTimer, Slot
+from python_qt_binding.QtCore import Qt, QTimer, Slot, QThread, QStringListModel, QModelIndex
 from python_qt_binding.QtGui import QKeySequence
-from python_qt_binding.QtWidgets import QShortcut, QWidget
+from python_qt_binding.QtWidgets import QShortcut, QWidget, QCompleter
 from rclpy.qos import QoSProfile
 from rqt_gui_py.plugin import Plugin
-
 
 class RobotSteering(Plugin):
 
@@ -50,6 +50,7 @@ class RobotSteering(Plugin):
 
         self._node = context.node
 
+        self._msgtype = ""
         self._publisher = None
 
         self._widget = QWidget()
@@ -62,6 +63,15 @@ class RobotSteering(Plugin):
                 self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         context.add_widget(self._widget)
 
+        self._widget.msgtype_combo_box.insertItem(0, "Twist")
+        self._widget.msgtype_combo_box.insertItem(1, "TwistStamped")
+
+        self._widget.msgtype_combo_box.currentTextChanged.connect(
+            self._on_msgtype_changed)
+
+        # Run the callback once so _msgtype is initialized
+        self._on_msgtype_changed()
+        
         self._widget.topic_line_edit.textChanged.connect(
             self._on_topic_changed)
         self._widget.stop_push_button.pressed.connect(self._on_stop_pressed)
@@ -167,20 +177,63 @@ class RobotSteering(Plugin):
         self._widget.decrease_z_angular_push_button.setToolTip(
             self._widget.decrease_z_angular_push_button.toolTip() + ' ' + self.tr('([Shift +] D)'))
 
-        # timer to consecutively send twist messages
+        # Timer to consecutively send twist messages
         self._update_parameter_timer = QTimer(self)
         self._update_parameter_timer.timeout.connect(
             self._on_parameter_changed)
         self._update_parameter_timer.start(100)
         self.zero_cmd_sent = False
 
+        # Twist/TwistStamped topic name autocomplete
+        self.topic_completer = QCompleter()
+        self.topic_completer.setCompletionMode(QCompleter.PopupCompletion)
+        self._widget.topic_line_edit.setCompleter(self.topic_completer)
+        self.model = QStringListModel()
+        self.topic_completer.setModel(self.model)
+
+        self._on_topic_refresh_timer()
+
+        # Timer to periodically update topic suggestions
+        self._update_topic_completer_timer = QTimer(self)
+        self._update_topic_completer_timer.timeout.connect(
+            self._on_topic_refresh_timer)
+        self._update_topic_completer_timer.start(10000)
+
+    def _on_topic_refresh_timer(self):
+        topics_and_names = self._node.get_topic_names_and_types()
+        relevant_topics = []
+
+        for name, topic in topics_and_names:
+            if 'geometry_msgs/msg/Twist' in topic or 'geometry_msgs/msg/TwistStamped' in topic:
+                relevant_topics.append(name)
+
+        self.model = QStringListModel(relevant_topics)
+        self.topic_completer.setModel(self.model)
+
+
+    def _on_msgtype_changed(self):
+        # TODO
+        self._msgtype = self._widget.msgtype_combo_box.currentText()
+        self._on_topic_changed(self._widget.topic_line_edit.text())
+
     @Slot(str)
     def _on_topic_changed(self, topic):
+
         topic = str(topic)
         self._unregister_publisher()
-        if topic == '':
+
+        # TODO: Is there a check_topic_valid()?
+        if topic == '' or not topic.startswith("/") or topic.endswith("/"):
+            # TODO: Set qlineedits's background color red while this is true?
             return
-        self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
+
+        if (self._msgtype == "Twist"):
+            self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
+        elif (self._msgtype == "TwistStamped"):
+            self._publisher = self._node.create_publisher(TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+        else:
+            self._publisher = None
+            return
 
     def _on_stop_pressed(self):
         # If the current value of sliders is zero directly send stop twist msg
@@ -264,6 +317,7 @@ class RobotSteering(Plugin):
     def _send_twist(self, x_linear, z_angular):
         if self._publisher is None:
             return
+
         twist = Twist()
         twist.linear.x = x_linear
         twist.linear.y = 0.0
@@ -272,19 +326,33 @@ class RobotSteering(Plugin):
         twist.angular.y = 0.0
         twist.angular.z = z_angular
 
+        if self._msgtype == "Twist":
+            twist_msg = twist
+        elif self._msgtype == "TwistStamped":
+            twist_msg = TwistStamped()
+            twist_msg.header = Header()
+            twist_msg.header.stamp = self._node.get_clock().now().to_msg()
+            twist_msg.twist = twist
+        else:
+            return
+
         # Only send the zero command once so other devices can take control
         if x_linear == 0.0 and z_angular == 0.0:
             if not self.zero_cmd_sent:
                 self.zero_cmd_sent = True
-                self._publisher.publish(twist)
+                self._publisher.publish(twist_msg)
         else:
             self.zero_cmd_sent = False
-            self._publisher.publish(twist)
+            self._publisher.publish(twist_msg)
 
     def _unregister_publisher(self):
         if self._publisher is not None:
             self._node.destroy_publisher(self._publisher)
             self._publisher = None
+
+            # A short delay between stopping the publisher is needed
+            # if we want to create a new one on the same topic with a different message type
+            QThread.msleep(100)
 
     def shutdown_plugin(self):
         self._update_parameter_timer.stop()

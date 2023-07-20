@@ -31,7 +31,7 @@
 import os
 
 from ament_index_python import get_resource
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
 from python_qt_binding.QtGui import QKeySequence
@@ -51,6 +51,7 @@ class RobotSteering(Plugin):
         self._node = context.node
 
         self._publisher = None
+        self._publisher_stamped = None
 
         self._widget = QWidget()
         _, package_path = get_resource('packages', 'rqt_robot_steering')
@@ -181,6 +182,8 @@ class RobotSteering(Plugin):
         if topic == '':
             return
         self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
+        self._publisher_stamped = self._node.create_publisher(
+            TwistStamped, topic + '_stamped', qos_profile=QoSProfile(depth=10))
 
     def _on_stop_pressed(self):
         # If the current value of sliders is zero directly send stop twist msg
@@ -262,8 +265,9 @@ class RobotSteering(Plugin):
             self._widget.z_angular_slider.value() / RobotSteering.slider_factor)
 
     def _send_twist(self, x_linear, z_angular):
-        if self._publisher is None:
+        if self._publisher_stamped is None and self._publisher_stamped is None:
             return
+
         twist = Twist()
         twist.linear.x = x_linear
         twist.linear.y = 0.0
@@ -272,19 +276,29 @@ class RobotSteering(Plugin):
         twist.angular.y = 0.0
         twist.angular.z = z_angular
 
+        twist_stamped = TwistStamped()
+        twist_stamped.twist = twist
+        twist_stamped.header.stamp = self._node.get_clock().now().to_msg()
+        twist_stamped.header.frame_id = ''
+
         # Only send the zero command once so other devices can take control
         if x_linear == 0.0 and z_angular == 0.0:
             if not self.zero_cmd_sent:
                 self.zero_cmd_sent = True
                 self._publisher.publish(twist)
+                self._publisher_stamped.publish(twist_stamped)
         else:
             self.zero_cmd_sent = False
             self._publisher.publish(twist)
+            self._publisher_stamped.publish(twist_stamped)
 
     def _unregister_publisher(self):
         if self._publisher is not None:
             self._node.destroy_publisher(self._publisher)
             self._publisher = None
+        if self._publisher_stamped is not None:
+            self._node.destroy_publisher(self._publisher_stamped)
+            self._publisher_stamped = None
 
     def shutdown_plugin(self):
         self._update_parameter_timer.stop()

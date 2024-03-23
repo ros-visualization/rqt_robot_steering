@@ -52,10 +52,12 @@ class RobotSteering(Plugin):
 
         self._publisher = None
         self._publisher_stamped = None
+        self._use_stamped = True
 
         self._widget = QWidget()
         _, package_path = get_resource('packages', 'rqt_robot_steering')
-        ui_file = os.path.join(package_path, 'share', 'rqt_robot_steering', 'resource', 'RobotSteering.ui')
+        ui_file = os.path.join(
+            package_path, 'share', 'rqt_robot_steering', 'resource', 'RobotSteering.ui')
         loadUi(ui_file, self._widget)
         self._widget.setObjectName('RobotSteeringUi')
         if context.serial_number() > 1:
@@ -65,6 +67,8 @@ class RobotSteering(Plugin):
 
         self._widget.topic_line_edit.textChanged.connect(
             self._on_topic_changed)
+        self._widget.stamped_check_box.stateChanged.connect(
+            self._on_stamped_cb_changed)
         self._widget.stop_push_button.pressed.connect(self._on_stop_pressed)
 
         self._widget.x_linear_slider.valueChanged.connect(
@@ -181,9 +185,42 @@ class RobotSteering(Plugin):
         self._unregister_publisher()
         if topic == '':
             return
-        self._publisher = self._node.create_publisher(Twist, topic, qos_profile=QoSProfile(depth=10))
-        self._publisher_stamped = self._node.create_publisher(
-            TwistStamped, topic + '_stamped', qos_profile=QoSProfile(depth=10))
+        try:
+          if self._use_stamped:
+            self._publisher_stamped = self._node.create_publisher(
+                TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+          else:
+            self._publisher = self._node.create_publisher(
+                Twist, topic, qos_profile=QoSProfile(depth=10))
+        except Exception as e:
+            print('Error creating publisher: %s' % e)
+          
+    @Slot(int)
+    def _on_stamped_cb_changed(self, state):
+        state = int(state)
+        self._unregister_publisher()
+        self._use_stamped = state
+        # we can't change this in the same slot or we get a type error from rcl
+        self._update_topic_type_timer = QTimer(self)
+        self._update_topic_type_timer.timeout.connect(
+            self._on_topic_type_changed)
+        self._update_topic_type_timer.start(100)
+
+    def _on_topic_type_changed(self):
+        topic = self._widget.topic_line_edit.text()
+        self._update_topic_type_timer.stop()
+        if topic == '':
+            return
+        try:
+          if self._use_stamped:
+            self._publisher_stamped = self._node.create_publisher(
+                TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+          else:
+            self._publisher = self._node.create_publisher(
+                Twist, topic, qos_profile=QoSProfile(depth=10))
+        except Exception as e:
+            print('Error creating publisher: %s' % e)
+        
 
     def _on_stop_pressed(self):
         # If the current value of sliders is zero directly send stop twist msg
@@ -285,12 +322,13 @@ class RobotSteering(Plugin):
         if x_linear == 0.0 and z_angular == 0.0:
             if not self.zero_cmd_sent:
                 self.zero_cmd_sent = True
-                self._publisher.publish(twist)
-                self._publisher_stamped.publish(twist_stamped)
         else:
             self.zero_cmd_sent = False
-            self._publisher.publish(twist)
+
+        if self._use_stamped:
             self._publisher_stamped.publish(twist_stamped)
+        else:
+            self._publisher.publish(twist)
 
     def _unregister_publisher(self):
         if self._publisher is not None:
@@ -302,11 +340,14 @@ class RobotSteering(Plugin):
 
     def shutdown_plugin(self):
         self._update_parameter_timer.stop()
+        self._update_topic_type_timer.stop()
         self._unregister_publisher()
 
     def save_settings(self, plugin_settings, instance_settings):
         instance_settings.set_value(
             'topic', self._widget.topic_line_edit.text())
+        instance_settings.set_value(
+            'stamped', self._widget.stamped_check_box.isChecked())
         instance_settings.set_value(
             'vx_max', self._widget.max_x_linear_double_spin_box.value())
         instance_settings.set_value(
@@ -320,6 +361,11 @@ class RobotSteering(Plugin):
         value = instance_settings.value('topic', '/cmd_vel')
         value = self._node.get_parameter_or('~default_topic', value)
         self._widget.topic_line_edit.setText(value)
+                
+        value = self._widget.stamped_check_box.isChecked()        
+        value = instance_settings.value('stamped', value)
+        value = self._node.get_parameter_or('~default_stamped', value)
+        self._widget.stamped_check_box.setChecked(value == 'true' or value == 'True')
 
         value = self._widget.max_x_linear_double_spin_box.value()
         value = instance_settings.value('vx_max', value)

@@ -27,6 +27,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="stamped_check_box">
+       <property name="text">
+        <string>stamped</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="stop_push_button">
        <property name="toolTip">
         <string>Reset velocities to zero</string>

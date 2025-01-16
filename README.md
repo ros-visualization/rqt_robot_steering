@@ -1,4 +1,4 @@
-# RQT-Robot-Steering-Plugin for RQT
+# RQT-Robot-Steering-Plugin
 
 This plugin has been forked from the original [rqt-robot-steering-plugin](https://github.com/ros-visualization/rqt_robot_steering)
 

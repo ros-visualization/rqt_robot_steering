@@ -2,8 +2,14 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2025-03-21)
+------------------
+* Publish TwistStamped message optionally (`#18 <https://github.com/ros-visualization/rqt_robot_steering/issues/18>`_)
+* remove obsolete CMakeLists.txt
+* Contributors: Christoph Fröhlich, Dirk Thomas
+
+1.0.0 (2019-11-15)
+------------------
 * port package to ROS 2 (`#7 <https://github.com/ros-visualization/rqt_robot_steering/issues/7>`_)
 * minor cleanup (`#6 <https://github.com/ros-visualization/rqt_robot_steering/issues/6>`_)
 * add Python 3 conditional dependencies (`#5 <https://github.com/ros-visualization/rqt_robot_steering/issues/5>`_)

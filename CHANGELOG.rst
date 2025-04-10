@@ -2,6 +2,13 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* make min/max values int (`#13 <https://github.com/ros-visualization/rqt_robot_steering/issues/13>`_)
+* Import setup from setuptools instead of distutils.core (`#15 <https://github.com/ros-visualization/rqt_robot_steering/issues/15>`_)
+* Update maintainers (`#11 <https://github.com/ros-visualization/rqt_robot_steering/issues/11>`_)
+* Contributors: Arne Hitzmann, Lucas Walter, Matthijs van der Burgh, Srishti Dhamija
+
 0.5.12 (2020-10-21)
 -------------------
 * fix shebang line for Python 3 (`#9 <https://github.com/ros-visualization/rqt_robot_steering/issues/9>`_)

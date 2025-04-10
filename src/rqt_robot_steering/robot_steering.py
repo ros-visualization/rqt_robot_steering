@@ -302,7 +302,7 @@ class RobotSteering(Plugin):
             self._widget.z_angular_slider.value() / RobotSteering.slider_factor)
 
     def _send_twist(self, x_linear, z_angular):
-        if self._publisher_stamped is None and self._publisher_stamped is None:
+        if self._publisher is None and self._publisher_stamped is None:
             return
 
         twist = Twist()

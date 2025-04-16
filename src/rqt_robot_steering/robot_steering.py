@@ -302,7 +302,7 @@ class RobotSteering(Plugin):
             self._widget.z_angular_slider.value() / RobotSteering.slider_factor)
 
     def _send_twist(self, x_linear, z_angular):
-        if self._publisher_stamped is None and self._publisher_stamped is None:
+        if self._publisher is None and self._publisher_stamped is None:
             return
 
         twist = Twist()
@@ -320,7 +320,9 @@ class RobotSteering(Plugin):
 
         # Only send the zero command once so other devices can take control
         if x_linear == 0.0 and z_angular == 0.0:
-            if not self.zero_cmd_sent:
+            if self.zero_cmd_sent:
+                return
+            else:
                 self.zero_cmd_sent = True
         else:
             self.zero_cmd_sent = False

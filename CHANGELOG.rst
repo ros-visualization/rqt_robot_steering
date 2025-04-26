@@ -2,8 +2,8 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.14 (2025-04-26)
+-------------------
 * Bump cmake_minimum_required to avoid deprecation (`#24 <https://github.com/ros-visualization/rqt_robot_steering/issues/24>`_)
 * Contributors: Arne Hitzmann
 

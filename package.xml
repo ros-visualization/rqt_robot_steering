@@ -4,7 +4,7 @@
   schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rqt_robot_steering</name>
-  <version>0.5.13</version>
+  <version>0.5.14</version>
   <description>rqt_robot_steering provides a GUI plugin for steering a robot using Twist messages.</description>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <maintainer email="ablasdel@gmail.com">Aaron Blasdel</maintainer>

@@ -2,6 +2,11 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Bump cmake_minimum_required to avoid deprecation (`#24 <https://github.com/ros-visualization/rqt_robot_steering/issues/24>`_)
+* Contributors: Arne Hitzmann
+
 0.5.13 (2025-04-10)
 -------------------
 * make min/max values int (`#13 <https://github.com/ros-visualization/rqt_robot_steering/issues/13>`_)

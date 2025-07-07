@@ -2,6 +2,11 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.2 (2025-07-07)
+------------------
+* Fixed bugs after adding TwistStamped publishing (simplified) (`#23 <https://github.com/ros-visualization/rqt_robot_steering/issues/23>`_)
+* Contributors: Patrik Knaperek
+
 1.0.1 (2025-03-21)
 ------------------
 * Publish TwistStamped message optionally (`#18 <https://github.com/ros-visualization/rqt_robot_steering/issues/18>`_)

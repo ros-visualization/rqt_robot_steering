@@ -186,15 +186,15 @@ class RobotSteering(Plugin):
         if topic == '':
             return
         try:
-          if self._use_stamped:
-            self._publisher_stamped = self._node.create_publisher(
-                TwistStamped, topic, qos_profile=QoSProfile(depth=10))
-          else:
-            self._publisher = self._node.create_publisher(
-                Twist, topic, qos_profile=QoSProfile(depth=10))
+            if self._use_stamped:
+                self._publisher_stamped = self._node.create_publisher(
+                    TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+            else:
+                self._publisher = self._node.create_publisher(
+                    Twist, topic, qos_profile=QoSProfile(depth=10))
         except Exception as e:
             print('Error creating publisher: %s' % e)
-          
+
     @Slot(int)
     def _on_stamped_cb_changed(self, state):
         state = int(state)
@@ -212,15 +212,14 @@ class RobotSteering(Plugin):
         if topic == '':
             return
         try:
-          if self._use_stamped:
-            self._publisher_stamped = self._node.create_publisher(
-                TwistStamped, topic, qos_profile=QoSProfile(depth=10))
-          else:
-            self._publisher = self._node.create_publisher(
-                Twist, topic, qos_profile=QoSProfile(depth=10))
+            if self._use_stamped:
+                self._publisher_stamped = self._node.create_publisher(
+                    TwistStamped, topic, qos_profile=QoSProfile(depth=10))
+            else:
+                self._publisher = self._node.create_publisher(
+                    Twist, topic, qos_profile=QoSProfile(depth=10))
         except Exception as e:
             print('Error creating publisher: %s' % e)
-        
 
     def _on_stop_pressed(self):
         # If the current value of sliders is zero directly send stop twist msg
@@ -363,8 +362,8 @@ class RobotSteering(Plugin):
         value = instance_settings.value('topic', '/cmd_vel')
         value = self._node.get_parameter_or('~default_topic', value)
         self._widget.topic_line_edit.setText(value)
-                
-        value = self._widget.stamped_check_box.isChecked()        
+
+        value = self._widget.stamped_check_box.isChecked()
         value = instance_settings.value('stamped', value)
         value = self._node.get_parameter_or('~default_stamped', value)
         self._widget.stamped_check_box.setChecked(value == 'true' or value == 'True')

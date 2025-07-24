@@ -29,6 +29,11 @@ setup(
         'rqt_robot_steering provides a GUI plugin for steering a robot using Twist messages.'
     ),
     license='BSD',
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
             'rqt_robot_steering = ' + package_name + '.main:main',

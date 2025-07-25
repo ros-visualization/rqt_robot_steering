@@ -2,6 +2,12 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.0.0 (2025-07-24)
+------------------
+* Added linters (`#26 <https://github.com/ros-visualization/rqt_robot_steering/issues/26>`_)
+* Use console_script entrypoint (`#12 <https://github.com/ros-visualization/rqt_robot_steering/issues/12>`_)
+* Contributors: Alejandro Hernández Cordero, Melvin Wang
+
 1.0.2 (2025-07-07)
 ------------------
 * Fixed bugs after adding TwistStamped publishing (simplified) (`#23 <https://github.com/ros-visualization/rqt_robot_steering/issues/23>`_)

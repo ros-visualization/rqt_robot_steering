@@ -1,7 +1,5 @@
 # RQT Robot Steering
 
----
-
 This package contains the `rqt_robot_steering` node, an RQT plugin which publishes a Twist (or TwistStamped) containing X linear and Z angular velocities.
 This is intended for 2D navigation scenarios.
 
@@ -17,15 +15,11 @@ ros2 run rqt_robot_steering rqt_robot_steering --ros-args -p default_topic:=my_t
 
 ## Published Topics
 
----
-
 By default, publisheds to `/cmd_vel`.
 The topic name can be changed in the GUI, and will be saved/restored if the GUI is closed cleanly (not Ctrl+C).
 You can override this topic name using ROS parameters.
 
 ## Parameters
-
----
 
 - `default_topic` (string) - The topic name to publish on
 - `default_stamped` (bool) - Whether to publish `Twist` or `TwistStamped`

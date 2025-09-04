@@ -28,4 +28,3 @@ You can override this topic name using ROS parameters.
 - `default_vw_min` (double) - The minimum Z velocity in rad/s, used by the horizontal slider.
 - `default_vw_max` (double) - The maximum Z velocity in rad/s, used by the horizontal slider.
 
-

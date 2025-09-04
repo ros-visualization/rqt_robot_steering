@@ -16,7 +16,7 @@
 #     from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 # FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 # COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -36,9 +36,9 @@ from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
 from python_qt_binding.QtGui import QKeySequence
 from python_qt_binding.QtWidgets import QShortcut, QWidget
+from rclpy.parameter import Parameter
 from rclpy.qos import QoSProfile
 from rqt_gui_py.plugin import Plugin
-from rclpy.parameter import Parameter
 
 
 class RobotSteering(Plugin):
@@ -51,13 +51,12 @@ class RobotSteering(Plugin):
 
         self._node = context.node
 
-        self._node.declare_parameter("default_topic", Parameter.Type.STRING)
-        self._node.declare_parameter("default_stamped", Parameter.Type.BOOL)
-        self._node.declare_parameter("default_vx_min", Parameter.Type.DOUBLE)
-        self._node.declare_parameter("default_vx_max", Parameter.Type.DOUBLE)
-        self._node.declare_parameter("default_vw_min", Parameter.Type.DOUBLE)
-        self._node.declare_parameter("default_vw_max", Parameter.Type.DOUBLE)
-
+        self._node.declare_parameter('default_topic', Parameter.Type.STRING)
+        self._node.declare_parameter('default_stamped', Parameter.Type.BOOL)
+        self._node.declare_parameter('default_vx_min', Parameter.Type.DOUBLE)
+        self._node.declare_parameter('default_vx_max', Parameter.Type.DOUBLE)
+        self._node.declare_parameter('default_vw_min', Parameter.Type.DOUBLE)
+        self._node.declare_parameter('default_vw_max', Parameter.Type.DOUBLE)
 
         self._publisher = None
         self._publisher_stamped = None
@@ -379,7 +378,7 @@ class RobotSteering(Plugin):
         self._widget.topic_line_edit.setText(value)
 
         value = self._widget.stamped_check_box.isChecked()
-        if instance_settings.contains("stamped"):
+        if instance_settings.contains('stamped'):
             value = instance_settings.value('stamped', value) in ['true', 'True']
         value = self._node.get_parameter_or('default_stamped', value)
         if isinstance(value, Parameter):
@@ -387,7 +386,7 @@ class RobotSteering(Plugin):
         self._widget.stamped_check_box.setChecked(value)
 
         value = self._widget.max_x_linear_double_spin_box.value()
-        if instance_settings.contains("vx_max"):
+        if instance_settings.contains('vx_max'):
             value = float(instance_settings.value('vx_max', value))
         value = self._node.get_parameter_or('default_vx_max', value)
         if isinstance(value, Parameter):
@@ -395,7 +394,7 @@ class RobotSteering(Plugin):
         self._widget.max_x_linear_double_spin_box.setValue(value)
 
         value = self._widget.min_x_linear_double_spin_box.value()
-        if instance_settings.contains("vx_min"):
+        if instance_settings.contains('vx_min'):
             value = float(instance_settings.value('vx_min', value))
         value = self._node.get_parameter_or('default_vx_min', value)
         if isinstance(value, Parameter):
@@ -403,7 +402,7 @@ class RobotSteering(Plugin):
         self._widget.min_x_linear_double_spin_box.setValue(value)
 
         value = self._widget.max_z_angular_double_spin_box.value()
-        if instance_settings.contains("vw_max"):
+        if instance_settings.contains('vw_max'):
             value = float(instance_settings.value('vw_max', value))
         value = self._node.get_parameter_or('default_vw_max', value)
         if isinstance(value, Parameter):
@@ -411,7 +410,7 @@ class RobotSteering(Plugin):
         self._widget.max_z_angular_double_spin_box.setValue(value)
 
         value = self._widget.min_z_angular_double_spin_box.value()
-        if instance_settings.contains("vw_min"):
+        if instance_settings.contains('vw_min'):
             value = float(instance_settings.value('vw_min', value))
         value = self._node.get_parameter_or('default_vw_min', value)
         if isinstance(value, Parameter):

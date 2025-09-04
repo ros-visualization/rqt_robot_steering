@@ -9,7 +9,7 @@ Settings like the topic name and window size are saved to and restored from `~/.
 
 ## Example
 
-```
+```bash
 ros2 run rqt_robot_steering rqt_robot_steering --ros-args -p default_topic:=my_topic -p default_stamped:=true -p default_vx_max:=2.2
 ```
 

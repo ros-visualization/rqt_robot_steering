@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: rqt-robot-steering
+Version: 4.0.0
+Summary: rqt_robot_steering provides a GUI plugin for steering a robot using Twist messages.
+Author: Dirk Thomas
+Maintainer: Dirk Thomas
+Maintainer-email: dthomas@osrfoundation.org
+License: BSD
+Keywords: ROS
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+Provides-Extra: test
+License-File: LICENSE

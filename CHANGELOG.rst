@@ -2,6 +2,12 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.0.1 (2025-09-04)
+------------------
+* [rolling] respect param overrides (`#28 <https://github.com/ros-visualization/rqt_robot_steering/issues/28>`_)
+* Added CI (`#27 <https://github.com/ros-visualization/rqt_robot_steering/issues/27>`_)
+* Contributors: Alejandro Hernández Cordero, Peter Mitrano (AR)
+
 4.0.0 (2025-07-24)
 ------------------
 * Added linters (`#26 <https://github.com/ros-visualization/rqt_robot_steering/issues/26>`_)

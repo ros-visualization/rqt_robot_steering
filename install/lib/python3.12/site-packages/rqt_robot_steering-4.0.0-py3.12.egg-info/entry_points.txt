@@ -1,0 +1,2 @@
+[console_scripts]
+rqt_robot_steering = rqt_robot_steering.main:main

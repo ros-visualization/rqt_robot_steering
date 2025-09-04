@@ -1,0 +1,42 @@
+running egg_info
+creating build/rqt_robot_steering/rqt_robot_steering.egg-info
+writing build/rqt_robot_steering/rqt_robot_steering.egg-info/PKG-INFO
+writing dependency_links to build/rqt_robot_steering/rqt_robot_steering.egg-info/dependency_links.txt
+writing entry points to build/rqt_robot_steering/rqt_robot_steering.egg-info/entry_points.txt
+writing requirements to build/rqt_robot_steering/rqt_robot_steering.egg-info/requires.txt
+writing top-level names to build/rqt_robot_steering/rqt_robot_steering.egg-info/top_level.txt
+writing manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+reading manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build
+creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib
+creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+copying src/rqt_robot_steering/robot_steering.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+copying src/rqt_robot_steering/main.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+copying src/rqt_robot_steering/__init__.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+running install
+running install_lib
+creating /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/robot_steering.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/main.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/__init__.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/robot_steering.py to robot_steering.cpython-312.pyc
+byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/main.py to main.cpython-312.pyc
+byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /tmp/rqt_robot_steering/install/share/ament_index
+creating /tmp/rqt_robot_steering/install/share/ament_index/resource_index
+creating /tmp/rqt_robot_steering/install/share/ament_index/resource_index/packages
+copying resource/rqt_robot_steering -> /tmp/rqt_robot_steering/install/share/ament_index/resource_index/packages
+creating /tmp/rqt_robot_steering/install/share/rqt_robot_steering/resource
+copying resource/RobotSteering.ui -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering/resource
+copying package.xml -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering
+copying plugin.xml -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering
+running install_egg_info
+Copying build/rqt_robot_steering/rqt_robot_steering.egg-info to /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering-4.0.0-py3.12.egg-info
+running install_scripts
+Installing rqt_robot_steering script to /tmp/rqt_robot_steering/install/lib/rqt_robot_steering
+writing list of installed files to '/tmp/rqt_robot_steering/build/rqt_robot_steering/install.log'

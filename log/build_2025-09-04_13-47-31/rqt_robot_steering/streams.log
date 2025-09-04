@@ -1,0 +1,44 @@
+[0.597s] Invoking command in '/tmp/rqt_robot_steering': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PS1=\u@\h \[\e[32m\]\w \[\e[91m\]$(parse_git_branch)\[\e[00m\]$ PYTHONPATH=/tmp/rqt_robot_steering/build/rqt_robot_steering/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/tmp/rqt_robot_steering/install/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/rqt_robot_steering build --build-base /tmp/rqt_robot_steering/build/rqt_robot_steering/build install --record /tmp/rqt_robot_steering/build/rqt_robot_steering/install.log --single-version-externally-managed install_data
+[0.761s] running egg_info
+[0.761s] creating build/rqt_robot_steering/rqt_robot_steering.egg-info
+[0.772s] writing build/rqt_robot_steering/rqt_robot_steering.egg-info/PKG-INFO
+[0.772s] writing dependency_links to build/rqt_robot_steering/rqt_robot_steering.egg-info/dependency_links.txt
+[0.772s] writing entry points to build/rqt_robot_steering/rqt_robot_steering.egg-info/entry_points.txt
+[0.772s] writing requirements to build/rqt_robot_steering/rqt_robot_steering.egg-info/requires.txt
+[0.772s] writing top-level names to build/rqt_robot_steering/rqt_robot_steering.egg-info/top_level.txt
+[0.826s] writing manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+[0.851s] reading manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+[0.851s] adding license file 'LICENSE'
+[0.851s] writing manifest file 'build/rqt_robot_steering/rqt_robot_steering.egg-info/SOURCES.txt'
+[0.851s] running build
+[0.851s] running build_py
+[0.852s] creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build
+[0.852s] creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib
+[0.852s] creating /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+[0.852s] copying src/rqt_robot_steering/robot_steering.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+[0.852s] copying src/rqt_robot_steering/main.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+[0.852s] copying src/rqt_robot_steering/__init__.py -> /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering
+[0.852s] running install
+[0.856s] running install_lib
+[0.869s] creating /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+[0.869s] copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/robot_steering.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+[0.869s] copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/main.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+[0.869s] copying /tmp/rqt_robot_steering/build/rqt_robot_steering/build/lib/rqt_robot_steering/__init__.py -> /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering
+[0.869s] byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/robot_steering.py to robot_steering.cpython-312.pyc
+[0.872s] byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/main.py to main.cpython-312.pyc
+[0.872s] byte-compiling /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering/__init__.py to __init__.cpython-312.pyc
+[0.872s] running install_data
+[0.872s] creating /tmp/rqt_robot_steering/install/share/ament_index
+[0.872s] creating /tmp/rqt_robot_steering/install/share/ament_index/resource_index
+[0.872s] creating /tmp/rqt_robot_steering/install/share/ament_index/resource_index/packages
+[0.872s] copying resource/rqt_robot_steering -> /tmp/rqt_robot_steering/install/share/ament_index/resource_index/packages
+[0.872s] creating /tmp/rqt_robot_steering/install/share/rqt_robot_steering/resource
+[0.872s] copying resource/RobotSteering.ui -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering/resource
+[0.872s] copying package.xml -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering
+[0.872s] copying plugin.xml -> /tmp/rqt_robot_steering/install/share/rqt_robot_steering
+[0.872s] running install_egg_info
+[0.884s] Copying build/rqt_robot_steering/rqt_robot_steering.egg-info to /tmp/rqt_robot_steering/install/lib/python3.12/site-packages/rqt_robot_steering-4.0.0-py3.12.egg-info
+[0.884s] running install_scripts
+[0.916s] Installing rqt_robot_steering script to /tmp/rqt_robot_steering/install/lib/rqt_robot_steering
+[0.916s] writing list of installed files to '/tmp/rqt_robot_steering/build/rqt_robot_steering/install.log'
+[0.932s] Invoked command in '/tmp/rqt_robot_steering' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PS1=\u@\h \[\e[32m\]\w \[\e[91m\]$(parse_git_branch)\[\e[00m\]$ PYTHONPATH=/tmp/rqt_robot_steering/build/rqt_robot_steering/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/tmp/rqt_robot_steering/install/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/rqt_robot_steering build --build-base /tmp/rqt_robot_steering/build/rqt_robot_steering/build install --record /tmp/rqt_robot_steering/build/rqt_robot_steering/install.log --single-version-externally-managed install_data

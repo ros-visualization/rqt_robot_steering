@@ -21,14 +21,13 @@ setup(
     keywords=['ROS'],
     classifiers=[
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
         'Topic :: Software Development',
     ],
     description=(
         'rqt_robot_steering provides a GUI plugin for steering a robot using Twist messages.'
     ),
-    license='BSD',
+    license='BSD-3-Clause',
     extras_require={
         'test': [
             'pytest',

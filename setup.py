@@ -3,7 +3,7 @@ from setuptools import setup
 package_name = 'rqt_robot_steering'
 setup(
     name=package_name,
-    version='4.0.2',
+    version='4.1.0',
     package_dir={'': 'src'},
     packages=[package_name],
     data_files=[

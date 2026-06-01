@@ -35,7 +35,13 @@ from geometry_msgs.msg import Twist, TwistStamped
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, Slot
 from python_qt_binding.QtGui import QKeySequence
-from python_qt_binding.QtWidgets import QShortcut, QWidget
+from python_qt_binding.QtWidgets import QWidget
+try:
+    # Qt 6: QShortcut lives in QtGui
+    from python_qt_binding.QtGui import QShortcut
+except ImportError:
+    # Qt 5: QShortcut lives in QtWidgets
+    from python_qt_binding.QtWidgets import QShortcut
 from rclpy.parameter import Parameter
 from rclpy.qos import QoSProfile
 from rqt_gui_py.plugin import Plugin
@@ -106,63 +112,63 @@ class RobotSteering(Plugin):
         self._widget.min_z_angular_double_spin_box.valueChanged.connect(
             self._on_min_z_angular_changed)
 
-        self.shortcut_w = QShortcut(QKeySequence(Qt.Key_W), self._widget)
-        self.shortcut_w.setContext(Qt.ApplicationShortcut)
+        self.shortcut_w = QShortcut(QKeySequence('W'), self._widget)
+        self.shortcut_w.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_w.activated.connect(self._on_increase_x_linear_pressed)
-        self.shortcut_x = QShortcut(QKeySequence(Qt.Key_X), self._widget)
-        self.shortcut_x.setContext(Qt.ApplicationShortcut)
+        self.shortcut_x = QShortcut(QKeySequence('X'), self._widget)
+        self.shortcut_x.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_x.activated.connect(self._on_reset_x_linear_pressed)
-        self.shortcut_s = QShortcut(QKeySequence(Qt.Key_S), self._widget)
-        self.shortcut_s.setContext(Qt.ApplicationShortcut)
+        self.shortcut_s = QShortcut(QKeySequence('S'), self._widget)
+        self.shortcut_s.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_s.activated.connect(self._on_decrease_x_linear_pressed)
-        self.shortcut_a = QShortcut(QKeySequence(Qt.Key_A), self._widget)
-        self.shortcut_a.setContext(Qt.ApplicationShortcut)
+        self.shortcut_a = QShortcut(QKeySequence('A'), self._widget)
+        self.shortcut_a.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_a.activated.connect(self._on_increase_z_angular_pressed)
-        self.shortcut_z = QShortcut(QKeySequence(Qt.Key_Z), self._widget)
-        self.shortcut_z.setContext(Qt.ApplicationShortcut)
+        self.shortcut_z = QShortcut(QKeySequence('Z'), self._widget)
+        self.shortcut_z.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_z.activated.connect(self._on_reset_z_angular_pressed)
-        self.shortcut_d = QShortcut(QKeySequence(Qt.Key_D), self._widget)
-        self.shortcut_d.setContext(Qt.ApplicationShortcut)
+        self.shortcut_d = QShortcut(QKeySequence('D'), self._widget)
+        self.shortcut_d.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_d.activated.connect(self._on_decrease_z_angular_pressed)
 
         self.shortcut_shift_w = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_W), self._widget)
-        self.shortcut_shift_w.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+W'), self._widget)
+        self.shortcut_shift_w.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_w.activated.connect(
             self._on_strong_increase_x_linear_pressed)
         self.shortcut_shift_x = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_X), self._widget)
-        self.shortcut_shift_x.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+X'), self._widget)
+        self.shortcut_shift_x.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_x.activated.connect(
             self._on_reset_x_linear_pressed)
         self.shortcut_shift_s = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_S), self._widget)
-        self.shortcut_shift_s.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+S'), self._widget)
+        self.shortcut_shift_s.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_s.activated.connect(
             self._on_strong_decrease_x_linear_pressed)
         self.shortcut_shift_a = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_A), self._widget)
-        self.shortcut_shift_a.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+A'), self._widget)
+        self.shortcut_shift_a.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_a.activated.connect(
             self._on_strong_increase_z_angular_pressed)
         self.shortcut_shift_z = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_Z), self._widget)
-        self.shortcut_shift_z.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+Z'), self._widget)
+        self.shortcut_shift_z.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_z.activated.connect(
             self._on_reset_z_angular_pressed)
         self.shortcut_shift_d = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_D), self._widget)
-        self.shortcut_shift_d.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+D'), self._widget)
+        self.shortcut_shift_d.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_shift_d.activated.connect(
             self._on_strong_decrease_z_angular_pressed)
 
         self.shortcut_space = QShortcut(
-            QKeySequence(Qt.Key_Space), self._widget)
-        self.shortcut_space.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Space'), self._widget)
+        self.shortcut_space.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_space.activated.connect(self._on_stop_pressed)
         self.shortcut_space = QShortcut(
-            QKeySequence(Qt.SHIFT + Qt.Key_Space), self._widget)
-        self.shortcut_space.setContext(Qt.ApplicationShortcut)
+            QKeySequence('Shift+Space'), self._widget)
+        self.shortcut_space.setContext(Qt.ShortcutContext.ApplicationShortcut)
         self.shortcut_space.activated.connect(self._on_stop_pressed)
 
         self._widget.stop_push_button.setToolTip(

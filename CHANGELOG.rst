@@ -2,6 +2,11 @@
 Changelog for package rqt_robot_steering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.1.0 (2026-06-01)
+------------------
+* Support Qt5 and Qt6 (`#29 <https://github.com/ros-visualization/rqt_robot_steering/issues/29>`_)
+* Contributors: Alejandro Hernández Cordero
+
 4.0.2 (2025-09-04)
 ------------------
 * [rolling] respect param overrides (`#28 <https://github.com/ros-visualization/rqt_robot_steering/issues/28>`_)

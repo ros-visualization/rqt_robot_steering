@@ -53,6 +53,7 @@ class RobotSteering(Plugin):
         self._publisher = None
         self._publisher_stamped = None
         self._use_stamped = True
+        self._update_topic_type_timer = None
 
         self._widget = QWidget()
         _, package_path = get_resource('packages', 'rqt_robot_steering')
@@ -264,21 +265,27 @@ class RobotSteering(Plugin):
         self._widget.z_angular_slider.setValue(
             self._widget.z_angular_slider.value() - self._widget.z_angular_slider.singleStep())
 
+    @staticmethod
+    def _to_slider_value(value):
+        # QSlider only accepts ints, but the limits come from QDoubleSpinBoxes.
+        # Round rather than truncate so e.g. 0.57 * 1000 = 569.999... becomes 570.
+        return int(round(value * RobotSteering.slider_factor))
+
     def _on_max_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMaximum(
-            value * RobotSteering.slider_factor)
+            self._to_slider_value(value))
 
     def _on_min_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMinimum(
-            value * RobotSteering.slider_factor)
+            self._to_slider_value(value))
 
     def _on_max_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMaximum(
-            value * RobotSteering.slider_factor)
+            self._to_slider_value(value))
 
     def _on_min_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMinimum(
-            value * RobotSteering.slider_factor)
+            self._to_slider_value(value))
 
     def _on_strong_increase_x_linear_pressed(self):
         self._widget.x_linear_slider.setValue(
@@ -342,7 +349,8 @@ class RobotSteering(Plugin):
 
     def shutdown_plugin(self):
         self._update_parameter_timer.stop()
-        self._update_topic_type_timer.stop()
+        if self._update_topic_type_timer is not None:
+            self._update_topic_type_timer.stop()
         self._unregister_publisher()
 
     def save_settings(self, plugin_settings, instance_settings):

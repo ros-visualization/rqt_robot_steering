@@ -280,21 +280,27 @@ class RobotSteering(Plugin):
         self._widget.z_angular_slider.setValue(
             self._widget.z_angular_slider.value() - self._widget.z_angular_slider.singleStep())
 
+    @staticmethod
+    def _to_slider_value(value):
+        # QSlider only accepts ints, but the limits come from QDoubleSpinBoxes.
+        # Round rather than truncate so e.g. 2.01 * 1000 = 2009.999... becomes 2010.
+        return round(value * RobotSteering.slider_factor)
+
     def _on_max_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMaximum(
-            int(value * RobotSteering.slider_factor))
+            self._to_slider_value(value))
 
     def _on_min_x_linear_changed(self, value):
         self._widget.x_linear_slider.setMinimum(
-            int(value * RobotSteering.slider_factor))
+            self._to_slider_value(value))
 
     def _on_max_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMaximum(
-            int(value * RobotSteering.slider_factor))
+            self._to_slider_value(value))
 
     def _on_min_z_angular_changed(self, value):
         self._widget.z_angular_slider.setMinimum(
-            int(value * RobotSteering.slider_factor))
+            self._to_slider_value(value))
 
     def _on_strong_increase_x_linear_pressed(self):
         self._widget.x_linear_slider.setValue(
